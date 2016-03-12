@@ -11,7 +11,7 @@ public abstract class Game {
 
     public java.util.List<Card> deck = new ArrayList<>();
 
-    public java.util.List<java.util.List<Card>> cols = new ArrayList<>();
+    public java.util.List<java.util.List<Card>> hands = new ArrayList<>();
     public int cn;
 
     public boolean checker;
@@ -19,34 +19,51 @@ public abstract class Game {
     public Game()
     {
         cn=0;
-        cols.add(new ArrayList<Card>());
-        cols.add(new ArrayList<Card>());
-        cols.add(new ArrayList<Card>());
+        hands.add(new ArrayList<Card>());
+        hands.add(new ArrayList<Card>());
         checker=false;
     }
 
-    public abstract void buildDeck();
+    public void buildDeck()
+    {
+        for(int i = 2; i < 15; i++)
+        {
+            deck.add(new Card(i,Suit.Clubs));
+            deck.add(new Card(i,Suit.Hearts));
+            deck.add(new Card(i,Suit.Diamonds));
+            deck.add(new Card(i,Suit.Spades));
+
+        }
+    }
+
 
     public void shuffle() {
         long seed = System.nanoTime();
         Collections.shuffle(deck, new Random(seed));
     }
 
-    public abstract void deal();
-    public abstract void split();
-    public abstract void acesValue();
-    public abstract void stay();
-    public abstract void handValue();
+    public abstract void deal(int index);
+//    public abstract void split();
+//    public abstract void acesValue();
+//    public abstract void stay();
+//    public abstract void handValue();
+
+    public void customDeal(int c1, int c2) {
+        hands.get(0).add(deck.get(c1));
+        deck.remove(c1);
+        hands.get(1).add(deck.get(c2));
+        deck.remove(c2);
+    }
 
     private boolean colHasCards(int colNumber) {
-        if(this.cols.get(colNumber).size()>0){
+        if(this.hands.get(colNumber).size()>0){
             return true;
         }
         return false;
     }
 
     private Card getTopCard(int columnNumber) {
-        return this.cols.get(columnNumber).get(this.cols.get(columnNumber).size()-1);
+        return this.hands.get(columnNumber).get(this.hands.get(columnNumber).size()-1);
     }
 
 
@@ -57,11 +74,11 @@ public abstract class Game {
     }
 
     private void addCardToCol(int colTo, Card cardToMove) {
-        cols.get(colTo).add(cardToMove);
+        hands.get(colTo).add(cardToMove);
     }
 
     private void removeCardFromCol(int colFrom) {
-        this.cols.get(colFrom).remove(this.cols.get(colFrom).size()-1);
+        this.hands.get(colFrom).remove(this.hands.get(colFrom).size()-1);
 
 
     }
