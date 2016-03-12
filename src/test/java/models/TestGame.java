@@ -31,6 +31,29 @@ public class TestGame
         assertEquals("2Clubs",g.hands.get(0).get(0).toString());
         assertEquals("3Clubs",g.hands.get(1).get(0).toString());
     }
+    @Test
+    //winLose() and stay() tests
+    public void testWin(){
+        Game g = new Player();
+        g.buildDeck();
+        g.handValue = 21;
+        g.winLose();
+        assertEquals(1,g.win);
+        g.stay();
+        assertEquals(2,g.turn);
+    }
+    @Test
+    //winLose() and stay() tests
+    public void testDealerWin(){
+        Game g = new Dealer();
+        g.buildDeck();
+        g.handValue = 21;
+        g.winLose();
+        g.stay();
+        assertEquals(1,g.turn);
+    }
+
+
 
 
 }
