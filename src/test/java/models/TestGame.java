@@ -41,8 +41,6 @@ public class TestGame
         g.shuffle();
         g.dealInitial();
         System.out.print(g.getPlayerCount() + "\n");
-        g.sec_hand = 1;
-        g.sec_hand_lose =1;
         g.hitOne();
         assertEquals(1,g.cols.get(1).size());
         System.out.print(g.getPlayerCount());
@@ -71,21 +69,5 @@ public class TestGame
         System.out.print(g.getDealerCount());
     }
 
-
-    @Test
-    public void testSplit(){
-        Game g = new Game();
-        g.buildDeck();
-        g.shuffle();
-        g.dealInitial();
-        g.cols.get(0).remove(1);
-        Card card = g.cols.get(0).get(0);
-        g.cols.get(0).add(card);
-        g.split();
-        System.out.print(g.cols.get(0).size());
-        System.out.print(g.second_hand.get(0).size());
-        System.out.print(g.getsecond_handCount());
-        assertEquals(g.cols.get(0),g.second_hand.get(0));
-    }
 }
 
