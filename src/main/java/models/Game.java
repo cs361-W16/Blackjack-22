@@ -17,6 +17,7 @@ public class Game {
     public int playerCount;
     public int dealerCount;
 
+
     public Game()
     {
         cols.add(new ArrayList<Card>());
@@ -116,6 +117,7 @@ public class Game {
     {
         return dealerCount;
     }
+
 
     public int getPlayerCount()
     {
