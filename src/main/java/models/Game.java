@@ -14,8 +14,10 @@ public class Game {
     public java.util.List<java.util.List<Card>> cols = new ArrayList<>();
     public Player player;
     public Dealer dealer;
+
     public int playerCount;
     public int dealerCount;
+
 
 
     public Game()
@@ -74,6 +76,7 @@ public class Game {
         {
             //To do: Loose the Game
         }
+
     }
 
     public void dealerHit()
@@ -104,5 +107,4 @@ public class Game {
     {
         return playerCount;
     }
-
 }
