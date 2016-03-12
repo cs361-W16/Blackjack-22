@@ -75,7 +75,6 @@ public class Game {
         if (second_handCount < 21 && sec_hand == 1  && sec_hand_lose == 1){                   // if second hand is using
             Card card1 = secHand.deal(deck);
             second_hand.get(0).add(card1);
-            deck.remove(deck.size() - 1);
             second_handCount = secHand.getCount();
         }
         else{
