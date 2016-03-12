@@ -71,7 +71,7 @@ public class Game {
     {
         if (second_handCount < 21 && sec_hand == 1  && sec_hand_lose == 1){                   // if second hand is using
             Card card1 = deck.get(deck.size() - 1);
-            cols.get(0).add(card1);
+            second_hand.get(0).add(card1);
             deck.remove(deck.size() - 1);
             second_handCount = second_handCount + trueValue(card1.getValue());
         }
@@ -130,7 +130,7 @@ public class Game {
     public void split(){
         if (second_hand.get(0).size() == 0) {                                                    // if second hand is empty
             if (this.cols.get(0).size() == 2) {                                 // if the first hand has and only has 2 cards
-                if (this.cols.get(0).get(0) == this.cols.get(0).get(1)){   // if the 2 cards in the first card have same value
+                if (this.cols.get(0).get(0).getValue() == this.cols.get(0).get(1).getValue()){   // if the 2 cards in the first card have same value
                     Card card = cols.get(0).get(1);                         //move 1 of them to second hand
                     second_hand.get(0).add(card);
                     second_handCount = second_handCount + trueValue(card.getValue());
