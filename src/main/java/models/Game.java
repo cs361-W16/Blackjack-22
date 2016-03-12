@@ -1,6 +1,5 @@
 package models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -13,13 +12,16 @@ public class Game {
     public java.util.List<Card> deck = new ArrayList<>();
 
     public java.util.List<java.util.List<Card>> cols = new ArrayList<>();
-
+    public Player player;
+    public Dealer dealer;
     public int playerCount;
     public int dealerCount;
 
 
     public Game()
     {
+        this.player = new Player();
+        this.dealer = new Dealer();
         cols.add(new ArrayList<Card>());
         cols.add(new ArrayList<Card>());
     }
@@ -43,30 +45,30 @@ public class Game {
 
     public void dealInitial()
     {
-        Card card1 = deck.get(deck.size()-1);
+        Card card1 = player.deal(deck);
         cols.get(0).add(card1);
         deck.remove(deck.size()-1);
-        playerCount = playerCount + trueValue(card1.getValue());
+        playerCount = player.getCount();
 
-        Card card2 = deck.get(deck.size()-1);
+        Card card2 = player.deal(deck);
         cols.get(0).add(card2);
         deck.remove(deck.size()-1);
-        playerCount = playerCount + trueValue(card2.getValue());
+        playerCount = player.getCount();
 
-        Card card3 = deck.get(deck.size()-1);
+        Card card3 = dealer.deal(deck);
         cols.get(1).add(card3);
         deck.remove(deck.size()-1);
-        dealerCount = dealerCount + trueValue(card3.getValue());
+        dealerCount = dealer.getCount();
     }
 
     public void hitOne()
     {
         if (playerCount < 21)
         {
-            Card card1 = deck.get(deck.size() - 1);
+            Card card1 = player.deal(deck);
             cols.get(0).add(card1);
             deck.remove(deck.size() - 1);
-            playerCount = playerCount + trueValue(card1.getValue());
+            playerCount = player.getCount();
         }
         else
         {
@@ -76,36 +78,20 @@ public class Game {
 
     public void dealerHit()
     {
-        Card card3 = deck.get(deck.size()-1);
+        Card card3 = dealer.deal(deck);
         cols.get(1).add(card3);
         deck.remove(deck.size()-1);
-        dealerCount = dealerCount + trueValue(card3.getValue());
+        dealerCount = dealer.getCount();
     }
 
     public void dealer17()
     {
         while (dealerCount < 17)
         {
-            Card card3 = deck.get(deck.size()-1);
+            Card card3 = dealer.deal(deck);
             cols.get(1).add(card3);
             deck.remove(deck.size()-1);
-            dealerCount = dealerCount + trueValue(card3.getValue());
-        }
-    }
-    public int trueValue(int value)
-    {
-        if (value >= 2 && value <= 10)
-        {
-            return value;
-        }
-        else if (value >= 11 && value <= 13)
-        {
-            return 10;
-        }
-        else
-        {
-            return 11;
-            //To do: Enable Aces Value Button, change the value of the Aces
+            dealerCount = dealer.getCount();
         }
     }
 
@@ -114,9 +100,9 @@ public class Game {
         return dealerCount;
     }
 
-
     public int getPlayerCount()
     {
         return playerCount;
     }
+
 }
