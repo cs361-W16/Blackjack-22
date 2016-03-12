@@ -1,0 +1,119 @@
+<div class="center">
+    <h1 class="aligncenter"><img src="/assets/img/logo.png" width="350px" height="200px"></h1>
+</div>
+
+<link href="/assets/css/Blackjack.css" rel="stylesheet">
+<script type="text/javascript" src="/assets/webjars/jquery/2.1.3/jquery.js"></script>
+
+
+<body>
+<div id="left">
+    <ul class="vertical">
+        <li><button id="hitButton" class="mainButton"><img src="http://chetart.com/blog/wp-content/uploads/2012/05/playing-card-back.jpg" width="60px" height="90px"alt="Submit"  title="Hit Button"></button></li>
+        <li><button id="resetCards" class="mainButton"><img src="http://3.bp.blogspot.com/-GQkJcAvEWjc/T4FW8biI5GI/AAAAAAAAAPI/BDpfeqX01Xg/s1600/RESTART+BUTTON+1.png" width="60px" length="60px" alt="New Game" title="Restart Button"/></button></li>
+        <li><button id="stay" class="button">Stay</button></li>
+        <li><button id="split" class="button">Split</button></li>
+    </ul>
+</div>
+
+
+<table class="tableCenter aligncenter">
+    <tr class="title">
+        <td class="oddTitle">Player</td>
+        <td class="evenTitle">Dealer</td>
+    </tr>
+    <tr>
+        <td class="columnOfCards" id="c0" value="0"></td>
+        <td class="columnOfCards" id="c1" value="1"></td>
+    </tr>
+
+</table>
+
+<script>
+
+var game;
+function display(game) {
+    console.log(game);
+    $( '.columnOfCards' ).html("");
+
+    $.each(game.cols[0], function( key, val ) {
+        $( '#c0' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
+    });
+
+    $.each(game.cols[1], function( key, val ) {
+        $( '#c1' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
+    });
+
+    //error popout
+  if(game.checker == true){
+        var div = document.getElementById('failDiv');
+        if(div === null){
+            alert("Invalid removal.");
+        }
+    }
+    else{
+        var div = document.getElementById('failDiv');
+        if(div === null){}
+        else{
+            div.remove();
+        }
+    }
+}
+$.getJSON("http://localhost:8080/game", function( data ) {
+display(data);
+game = data;
+});
+
+
+$("#hitButton").click(function(){
+$.ajax({
+  type: "POST",
+  url: "/hitGame",
+  data: JSON.stringify(game),
+  success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
+        game = data;
+        display(data);},
+  contentType:"application/json; charset=utf-8",
+  dataType:"json",
+});
+});
+
+$("#stay").click(function(){
+$.ajax({
+  type: "POST",
+  url: "/stayGame",
+  data: JSON.stringify(game),
+  success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
+        game = data;
+        display(data);},
+  contentType:"application/json; charset=utf-8",
+  dataType:"json",
+});
+document.getElementById("stay").disabled = true
+document.getElementById("hitButton").disabled = true
+});
+
+//new game button
+$("#resetCards").click(function(){
+$.ajax({
+  type: "POST",
+  url: "/resetCards",
+  data: JSON.stringify(game),
+  success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
+        game = data;
+        display(data);},
+  contentType:"application/json; charset=utf-8",
+  dataType:"json",
+});
+document.getElementById("stay").disabled = false
+document.getElementById("hitButton").disabled = false
+});
+
+//main menu button
+    document.getElementById("mainMenu").onclick = function () {
+    location.href = "/";
+    }
+
+</script>
+</body>
+</html>

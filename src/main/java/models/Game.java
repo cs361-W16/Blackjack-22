@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -7,29 +8,25 @@ import java.util.Random;
 /**
  * Created by krisna on 3/11/2016.
  */
-public abstract class Game {
+public class Game {
 
     public java.util.List<Card> deck = new ArrayList<>();
 
-    public java.util.List<java.util.List<Card>> hands = new ArrayList<>();
-    public int cn;
+    public java.util.List<java.util.List<Card>> cols = new ArrayList<>();
 
-    public boolean checker;
-    public int win;
-    public int handValue;
-    public int turn;
+    public int playerCount;
+    public int dealerCount;
+
 
     public Game()
     {
-        cn=0;
-        hands.add(new ArrayList<Card>());
-        hands.add(new ArrayList<Card>());
-        checker=false;
+        cols.add(new ArrayList<Card>());
+        cols.add(new ArrayList<Card>());
     }
 
     public void buildDeck()
     {
-        for(int i = 2; i < 15; i++)
+        for(int i = 1; i < 14; i++)
         {
             deck.add(new Card(i,Suit.Clubs));
             deck.add(new Card(i,Suit.Hearts));
@@ -39,57 +36,91 @@ public abstract class Game {
         }
     }
 
-
     public void shuffle() {
         long seed = System.nanoTime();
         Collections.shuffle(deck, new Random(seed));
     }
 
-    public abstract void deal(int index);
-//    public abstract void split();
-//    public abstract void acesValue();
-//    public abstract void stay();
-//    public abstract void handValue();
+    public void dealInitial()
+    {
+        Card card1 = deck.get(deck.size()-1);
+        cols.get(0).add(card1);
+        deck.remove(deck.size()-1);
+        playerCount = playerCount + trueValue(card1.getValue());
 
-    public void customDeal(int c1, int c2) {
-        hands.get(0).add(deck.get(c1));
-        deck.remove(c1);
-        hands.get(1).add(deck.get(c2));
-        deck.remove(c2);
+        Card card2 = deck.get(deck.size()-1);
+        cols.get(0).add(card2);
+        deck.remove(deck.size()-1);
+        playerCount = playerCount + trueValue(card2.getValue());
+
+        Card card3 = deck.get(deck.size()-1);
+        cols.get(1).add(card3);
+        deck.remove(deck.size()-1);
+        dealerCount = dealerCount + trueValue(card3.getValue());
     }
 
-    private boolean colHasCards(int colNumber) {
-        if(this.hands.get(colNumber).size()>0){
-            return true;
+    public void hitOne()
+    {
+        if (playerCount < 21)
+        {
+            Card card1 = deck.get(deck.size() - 1);
+            cols.get(0).add(card1);
+            deck.remove(deck.size() - 1);
+            playerCount = playerCount + trueValue(card1.getValue());
         }
-        return false;
+        else
+        {
+            //To do: Loose the Game
+        }
     }
 
-    private Card getTopCard(int columnNumber) {
-        return this.hands.get(columnNumber).get(this.hands.get(columnNumber).size()-1);
+    public void dealerHit()
+    {
+        Card card3 = deck.get(deck.size()-1);
+        cols.get(1).add(card3);
+        deck.remove(deck.size()-1);
+        dealerCount = dealerCount + trueValue(card3.getValue());
+    }
+
+    public void dealer17()
+    {
+        if (dealerCount < 17)
+        {
+            Card card3 = deck.get(deck.size()-1);
+            cols.get(1).add(card3);
+            deck.remove(deck.size()-1);
+            dealerCount = dealerCount + trueValue(card3.getValue());
+        }
+        else
+        {
+
+        }
+    }
+    public int trueValue(int value)
+    {
+        if (value >= 2 && value <= 10)
+        {
+            return value;
+        }
+        else if (value >= 11 && value <= 13)
+        {
+            return 10;
+        }
+        else
+        {
+            return 11;
+            //To do: Enable Aces Value Button, change the value of the Aces
+        }
+    }
+
+    public int getDealerCount()
+    {
+        return dealerCount;
     }
 
 
-    public void move(int colFrom, int colTo) {
-        Card cardToMove = getTopCard(colFrom);
-        this.removeCardFromCol(colFrom);
-        this.addCardToCol(colTo, cardToMove);
+    public int getPlayerCount()
+    {
+        return playerCount;
     }
-
-    private void addCardToCol(int colTo, Card cardToMove) {
-        hands.get(colTo).add(cardToMove);
-    }
-
-    private void removeCardFromCol(int colFrom) {
-        this.hands.get(colFrom).remove(this.hands.get(colFrom).size()-1);
-
-
-    }
-
-    public abstract void winLose();
-    public abstract void stay();
-
-    }
-
-
-
+}
