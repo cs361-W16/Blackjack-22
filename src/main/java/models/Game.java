@@ -49,17 +49,14 @@ public class Game {
     {
         Card card1 = player.deal(deck);
         cols.get(0).add(card1);
-        deck.remove(deck.size()-1);
         playerCount = player.getCount();
 
         Card card2 = player.deal(deck);
         cols.get(0).add(card2);
-        deck.remove(deck.size()-1);
         playerCount = player.getCount();
 
         Card card3 = dealer.deal(deck);
         cols.get(1).add(card3);
-        deck.remove(deck.size()-1);
         dealerCount = dealer.getCount();
     }
 
@@ -69,7 +66,6 @@ public class Game {
         {
             Card card1 = player.deal(deck);
             cols.get(0).add(card1);
-            deck.remove(deck.size() - 1);
             playerCount = player.getCount();
         }
         else
@@ -83,7 +79,6 @@ public class Game {
     {
         Card card3 = dealer.deal(deck);
         cols.get(1).add(card3);
-        deck.remove(deck.size()-1);
         dealerCount = dealer.getCount();
     }
 
@@ -93,7 +88,6 @@ public class Game {
         {
             Card card3 = dealer.deal(deck);
             cols.get(1).add(card3);
-            deck.remove(deck.size()-1);
             dealerCount = dealer.getCount();
         }
     }
