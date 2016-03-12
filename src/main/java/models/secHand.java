@@ -1,9 +1,9 @@
 package models;
 
 /**
- * Created by krisna on 3/12/2016.
+ * Created by Yizheng on 2016/3/13.
  */
-public class Player extends Hands
+public class secHand extends Hands
 {
     public int numAces;
 
@@ -42,6 +42,7 @@ public class Player extends Hands
 
 
 
+
     @Override
     public Card deal(java.util.List<Card> deck)
     {
@@ -52,6 +53,5 @@ public class Player extends Hands
     }
 
 
-
-
 }
+

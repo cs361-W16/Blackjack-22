@@ -37,5 +37,7 @@ public class Dealer extends Hands
         count = count + trueValue(card1.getValue());
         return card1;
     }
+
+
 }
 

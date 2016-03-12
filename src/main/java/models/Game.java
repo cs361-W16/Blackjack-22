@@ -12,11 +12,17 @@ public class Game {
     public java.util.List<Card> deck = new ArrayList<>();
 
     public java.util.List<java.util.List<Card>> cols = new ArrayList<>();
+    public java.util.List<java.util.List<Card>> second_hand = new ArrayList<>();
     public Player player;
     public Dealer dealer;
+    public secHand secHand;
+
 
     public int playerCount;
     public int dealerCount;
+    public int second_handCount;
+    public int sec_hand;
+    public int sec_hand_lose;
 
 
 
@@ -24,8 +30,12 @@ public class Game {
     {
         this.player = new Player();
         this.dealer = new Dealer();
+        this.secHand = new secHand();
         cols.add(new ArrayList<Card>());
         cols.add(new ArrayList<Card>());
+        second_hand.add(new ArrayList<Card>());
+        second_handCount = 0;
+        sec_hand = 0;
     }
 
     public void buildDeck()
@@ -62,6 +72,15 @@ public class Game {
 
     public void hitOne()
     {
+        if (second_handCount < 21 && sec_hand == 1  && sec_hand_lose == 1){                   // if second hand is using
+            Card card1 = secHand.deal(deck);
+            second_hand.get(0).add(card1);
+            deck.remove(deck.size() - 1);
+            second_handCount = secHand.getCount();
+        }
+        else{
+            sec_hand_lose = 0;                                    // loose this hand
+        }
         if (playerCount < 21)
         {
             Card card1 = player.deal(deck);
@@ -74,7 +93,21 @@ public class Game {
         }
 
     }
-
+    public void split(){
+        if (second_hand.get(0).size() == 0) {                                                    // if second hand is empty
+            if (this.cols.get(0).size() == 2) {                                 // if the first hand has and only has 2 cards
+                if (this.cols.get(0).get(0).getValue() == this.cols.get(0).get(1).getValue()){   // if the 2 cards in the first card have same value
+                    Card card = cols.get(0).get(1);                         //move 1 of them to second hand
+                    second_hand.get(0).add(card);
+                    secHand.count = secHand.count + secHand.trueValue(card.getValue());
+                    second_handCount = secHand.getCount();
+                    cols.get(0).remove(1);
+                    sec_hand = 1;                                             // second hand starts to play
+                    sec_hand_lose = 1;                   // not lose yet
+                }
+            }
+        }
+    }
     public void dealerHit()
     {
         Card card3 = dealer.deal(deck);
@@ -100,5 +133,9 @@ public class Game {
     public int getPlayerCount()
     {
         return playerCount;
+    }
+    public int getsecond_handCount()
+    {
+        return second_handCount;
     }
 }

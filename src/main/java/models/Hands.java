@@ -14,6 +14,7 @@ public abstract class Hands
     {
         this.Hand = new ArrayList<>();
         this.count = 0;
+
     }
 
     public abstract int trueValue(int value);
