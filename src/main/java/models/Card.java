@@ -30,6 +30,7 @@ public class Card implements Serializable
     {
         return value;
     }
+
     public String toString()
     {
         return this.value + this.suit.toString();
