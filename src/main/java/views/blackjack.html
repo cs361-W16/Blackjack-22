@@ -1,0 +1,160 @@
+<div class="center">
+    <h1 class="aligncenter"><img src="/assets/img/logo.png" ></h1>
+</div>
+
+<link href="/assets/css/AcesUp.css" rel="stylesheet">
+<script type="text/javascript" src="/assets/webjars/jquery/2.1.3/jquery.js"></script>
+
+
+<body>
+<div id="left">
+    <ul class="vertical">
+        <li><button id="dealButton" class="mainButton"><img src="http://chetart.com/blog/wp-content/uploads/2012/05/playing-card-back.jpg" width="60px" height="90px"alt="Submit"  title="Hit Button"></button></li>
+        <li><a href="JavaScript:displayBox()"><img src="http://images.clipartpanda.com/question-purzen_Icon_with_question_mark_Vector_Clipart.png" width="50px" height="50px"alt="Submit" title="How To Play"></a></li>
+        <li><button id="stayButton" class="mainButton"><img src="http://3.bp.blogspot.com/-GQkJcAvEWjc/T4FW8biI5GI/AAAAAAAAAPI/BDpfeqX01Xg/s1600/RESTART+BUTTON+1.png" width="60px" length="60px" alt="New Game" title="Stay Button"/></button></li>
+        <li><button id="mainMenu" class="mainButton"><img src="http://uxrepo.com/static/icon-sets/elegant/svg/icon_menu-circle_alt.svg" width="60px" height="60px"alt="Main Menu"  title="Main Menu"></button></li>
+
+    </ul>
+</div>
+
+
+<table class="tableCenter aligncenter">
+    <tr class="title">
+        <td class="oddTitle">Column 0</td>
+        <td class="evenTitle">Column 1</td>
+        <td class="oddTitle">Column 2</td>
+        <td class="evenTitle">Column 3</td>
+    </tr>
+        <tr>
+            <td class="columnOfCards" id="c0" value="0"></td>
+            <td class="columnOfCards" id="c1" value="1"></td>
+            <td class="columnOfCards" id="c2" value="2"></td>
+            <td class="columnOfCards" id="c3" value="3"></td>
+        </tr>
+    <tr>
+        <td> <button id="Remove1" class="button">Remove</button></td>
+        <td> <button id="Remove2" class="button">Remove</button></td>
+        <td> <button id="Remove3" class="button">Remove</button></td>
+        <td><button id="Remove4" class="button">Remove</button></td>
+    </tr>
+
+</table>
+<div class="bottomCenter">
+    <h2 class="aligncenter">Move from column <input type="text" id="from_col"  /> to <input type="text" id="to_col"  /> <button id="moveButton" class="button">Move</button></h2>
+</div>
+<script>
+
+var game;
+function display(game) {
+    console.log(game);
+    $( '.columnOfCards' ).html("");
+
+    $.each(game.cols[0], function( key, val ) {
+        $( '#c0' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
+    });
+
+    $.each(game.cols[1], function( key, val ) {
+        $( '#c1' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
+    });
+
+    $.each(game.cols[2], function( key, val ) {
+        $( '#c2' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
+    });
+
+    $.each(game.cols[3], function( key, val ) {
+        $( '#c3' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
+    });
+
+
+    //error popout
+  if(game.checker == true){
+        var div = document.getElementById('failDiv');
+        if(div === null){
+            alert("Invalid removal.");
+        }
+    }
+    else{
+        var div = document.getElementById('failDiv');
+        if(div === null){}
+        else{
+            div.remove();
+        }
+    }
+}
+$.getJSON("http://localhost:8080/game", function( data ) {
+display(data);
+game = data;
+});
+
+
+$("#dealButton").click(function(){
+$.ajax({
+  type: "POST",
+  url: "/dealGame",
+  data: JSON.stringify(game),
+  success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
+        game = data;
+        display(data);},
+  contentType:"application/json; charset=utf-8",
+  dataType:"json",
+});
+});
+
+
+function removeCard(colNumber){
+$.ajax({
+type: "POST",
+url: "/removeCard/"+colNumber,
+data: JSON.stringify(game),
+success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
+game = data;
+display(data);},
+contentType:"application/json; charset=utf-8",
+dataType:"json",
+});
+
+}
+
+
+$("#Remove1").click(function(){
+    removeCard(0);
+});
+$("#Remove2").click(function(){
+    removeCard(1);
+});
+$("#Remove3").click(function(){
+    removeCard(2);
+});
+$("#Remove4").click(function(){
+    removeCard(3);
+});
+
+
+$("#moveButton").click(function(){
+var colFrom = $("#from_col").val();
+var colTo = $("#to_col").val();
+$.ajax({
+  type: "POST",
+  url: "/moveCard/"+colFrom+"/"+colTo,
+  data: JSON.stringify(game),
+  success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
+        game = data;
+        display(data);},
+  contentType:"application/json; charset=utf-8",
+  dataType:"json",
+});
+});
+
+
+function displayBox() {
+    alert("Four cards are dealt to the table.\nRemove a card by clicking the remove button underneath the column.\n2 is the lowest value and Ace is higher than king. Aces can not be removed.\nIf a spot is empty you may move another card to it.\nWhen no more moves can be made anymore, you should deal new cards to the table.\nA game is won when only aces are left in the table.\nHave fun!");
+}
+
+//main menu button
+    document.getElementById("mainMenu").onclick = function () {
+    location.href = "/";
+    }
+
+</script>
+</body>
+</html>
