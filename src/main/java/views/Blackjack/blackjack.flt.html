@@ -24,9 +24,12 @@
     </tr>
     <tr>
         <td class="columnOfCards" id="c0" value="0"></td>
-        <td class="columnOfCards" id="c2" value="0"></td>
+
         <td class="columnOfCards" id="c1" value="1"></td>
     </tr>
+    <tr><td class="columnOfCards" id="c2" value="2">
+
+    </td></tr>
 
 </table>
 
@@ -45,7 +48,7 @@ function display(game) {
         $( '#c1' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
     });
 
-     $.each(game.second_hand[0], function( key, val ) {
+     $.each(game.cols[2], function( key, val ) {
         $( '#c2' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
     });
 
@@ -101,7 +104,7 @@ document.getElementById("hitButton").disabled = true
 $("#split").click(function(){
 $.ajax({
   type: "POST",
-  url: "/splitGame",
+  url: "/split",
   data: JSON.stringify(game),
   success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
         game = data;

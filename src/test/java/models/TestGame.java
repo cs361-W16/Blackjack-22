@@ -81,9 +81,9 @@ public class TestGame
         g.cols.get(0).add(card);
         g.split();
         System.out.print(g.cols.get(0).size());
-        System.out.print(g.second_hand.get(0).size());
+        System.out.print(g.cols.get(2).size());
         System.out.print(g.getsecond_handCount());
-        assertEquals(g.cols.get(0),g.second_hand.get(0));
+        assertEquals(g.cols.get(0).get(0),g.cols.get(2).get(0));
     }
 
 }
