@@ -44,6 +44,10 @@ function display(game) {
         $( '#c1' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
     });
 
+     $.each(game.second_hand[0], function( key, val ) {
+        $( '#c1' ).append("<img src='/assets/img/"+val.value+"_of_"+val.suit+".png' class=cardLocation>");
+    });
+
     //error popout
   if(game.checker == true){
         var div = document.getElementById('failDiv');
