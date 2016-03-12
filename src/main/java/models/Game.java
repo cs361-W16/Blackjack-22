@@ -15,6 +15,9 @@ public abstract class Game {
     public int cn;
 
     public boolean checker;
+    public int win;
+    public int handValue;
+    public int turn;
 
     public Game()
     {
@@ -83,5 +86,10 @@ public abstract class Game {
 
     }
 
+    public abstract void winLose();
+    public abstract void stay();
 
-}
+    }
+
+
+
