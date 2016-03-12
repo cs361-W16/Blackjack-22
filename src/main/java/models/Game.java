@@ -84,16 +84,12 @@ public class Game {
 
     public void dealer17()
     {
-        if (dealerCount < 17)
+        while (dealerCount < 17)
         {
             Card card3 = deck.get(deck.size()-1);
             cols.get(1).add(card3);
             deck.remove(deck.size()-1);
             dealerCount = dealerCount + trueValue(card3.getValue());
-        }
-        else
-        {
-
         }
     }
     public int trueValue(int value)
