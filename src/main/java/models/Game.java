@@ -15,6 +15,8 @@ public class Game {
     public Player player;
     public Dealer dealer;
     public secHand secHand;
+    public int winner;
+    public int stayed;
 
 
     public int playerCount;
@@ -127,7 +129,6 @@ public class Game {
     {
         return dealerCount;
     }
-
     public int getPlayerCount()
     {
         return playerCount;
@@ -136,4 +137,28 @@ public class Game {
     {
         return second_handCount;
     }
+
+    public void winLose(){
+        if (playerCount == 21){
+            winner = 1;
+            return;
+        }
+        if((playerCount > 21)){
+            winner = 2;
+            return;
+        }
+        if((dealerCount > 21)){
+            winner = 1;
+            return;
+        }
+        if((playerCount > dealerCount) && (playerCount < 21) && (dealerCount < 21)){
+            winner = 1;
+            return;
+        }
+    }
+
+
+
+
+
 }
