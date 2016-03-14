@@ -73,6 +73,9 @@ public class TestGame
     @Test
     public void testSplit(){
         Game g = new Game();
+        secHand sec;
+        sec = new secHand();
+        sec.trueValue(1);
         g.buildDeck();
         g.shuffle();
         g.dealInitial();

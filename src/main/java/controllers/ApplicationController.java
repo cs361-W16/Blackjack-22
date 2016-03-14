@@ -50,6 +50,11 @@ public class ApplicationController {
         return Results.json().render(g);
     }
 
+    public Result splitPost(Context context, Game g) {
+        g.split();
+        return Results.json().render(g);
+    }
+
     public Result stayPost(Context context, Game g) {
         g.stayed = 1;
         g.dealerHit();

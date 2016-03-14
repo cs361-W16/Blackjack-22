@@ -117,7 +117,7 @@ document.getElementById("hitButton").disabled = true
 $("#split").click(function(){
 $.ajax({
   type: "POST",
-  url: "/split",
+  url: "/splitGame",
   data: JSON.stringify(game),
   success: function(data, status){console.log("Data: " + data + "\nStatus: " + status);
         game = data;
