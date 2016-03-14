@@ -75,8 +75,9 @@ function display(game) {
         document.getElementById("stay").disabled = true
         document.getElementById("hitButton").disabled = true
         }
-        else{
-        return;
+        else if(game.winner==3){
+        alert ("tie");
+
         }
 
 }

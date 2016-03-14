@@ -133,14 +133,23 @@ public class Game {
                 winner = 1;
                 return;
             }
-            if (playerCount == dealerCount || second_handCount == dealerCount) {
-                winner = 1;
+            if (playerCount > 21) {
+                winner = 2;
+                return;
+            }
+            if ((playerCount == dealerCount) || (second_handCount == dealerCount)) {
+                winner = 3;
                 return;
             }
             if ((playerCount < dealerCount && second_handCount < dealerCount)) {
                 winner = 2;
                 return;
-            } else {
+            }
+            if ((playerCount <= 21) && (playerCount >= dealerCount)){
+                winner = 1;
+                return;
+            }
+             else {
                 winner = 2;
                 return;
             }
@@ -154,7 +163,7 @@ public class Game {
                 return;
             }
             if (playerCount == dealerCount || second_handCount == dealerCount) {
-                winner = 1;
+                winner = 3;
                 return;
             } else if (playerCount < dealerCount && second_handCount < dealerCount) {
                 winner = 2;

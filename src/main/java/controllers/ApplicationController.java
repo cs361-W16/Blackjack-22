@@ -46,7 +46,6 @@ public class ApplicationController {
 
     public Result hitPost(Context context, Game g) {
         g.hitOne();
-        g.winLose();
         return Results.json().render(g);
     }
 
