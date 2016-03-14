@@ -105,7 +105,24 @@ public class TestGame
         g.winLose();
         assertEquals(1,g.winner);
 
+        g.dealerCount = 20;
+        g.playerCount = 20;
+        g.second_handCount = 19;
+        System.out.println(g.dealerCount);
+        System.out.println(g.playerCount);
+        g.winLose();
+        assertEquals(1,g.winner);
+
+        g.dealerCount = 20;
         g.playerCount = 19;
+        g.second_handCount = 20;
+        System.out.println(g.dealerCount);
+        System.out.println(g.playerCount);
+        g.winLose();
+        assertEquals(1,g.winner);
+
+        g.playerCount = 19;
+        g.second_handCount =19;
         g.winLose();
         assertEquals(2,g.winner);
 
@@ -115,6 +132,7 @@ public class TestGame
         g.stayed = 0;
 
         g.playerCount = 22;
+        g.second_handCount = 22;
         g.winLose();
         assertEquals(2,g.winner);
         g.playerCount = 0;
@@ -127,11 +145,13 @@ public class TestGame
         assertEquals(1,g.winner);
 
         g.playerCount = 20;
+        g.second_handCount = 20;
         g.dealerCount = 20;
         g.winLose();
         assertEquals(1,g.winner);
 
         g.playerCount = 19;
+        g.second_handCount = 19;
         g.winLose();
         assertEquals(2,g.winner);
     }
