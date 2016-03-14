@@ -40,13 +40,13 @@ public class ApplicationController {
         g.buildDeck();
         g.shuffle();
         g.dealInitial();
-        g.winner = 0;
         return Results.json().render(g);
     }
 
 
     public Result hitPost(Context context, Game g) {
         g.hitOne();
+        g.winLose();
         return Results.json().render(g);
     }
 
@@ -54,6 +54,7 @@ public class ApplicationController {
         g.stayed = 1;
         g.dealerHit();
         g.dealer17();
+        g.winLose();
         return Results.json().render(g);
     }
 
@@ -63,6 +64,7 @@ public class ApplicationController {
         g.shuffle();
         g.dealInitial();
         g.winner = 0;
+        g.stayed = 0;
         return Results.json().render(g);
     }
 

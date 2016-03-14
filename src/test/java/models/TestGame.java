@@ -100,15 +100,47 @@ public class TestGame
     @Test
     public void testWin2(){
     Game g = new Game();
+        g.stayed = 1;
         g.dealerCount = 22;
         g.winLose();
         assertEquals(1,g.winner);
 
+        g.dealerCount = 20;
         g.playerCount = 20;
-        g.dealerCount = 19;
+        System.out.println(g.dealerCount);
+        System.out.println(g.playerCount);
         g.winLose();
         assertEquals(1,g.winner);
 
+        g.playerCount = 19;
+        g.winLose();
+        assertEquals(2,g.winner);
+
+        g.dealerCount = 18;
+        g.winLose();
+        assertEquals(2,g.winner);
+        g.stayed = 0;
+
+        g.playerCount = 22;
+        g.winLose();
+        assertEquals(2,g.winner);
+        g.playerCount = 0;
+
+        g.dealerCount = 22;
+        g.winLose();
+        assertEquals(1,g.winner);
+
+        g.winLose();
+        assertEquals(1,g.winner);
+
+        g.playerCount = 20;
+        g.dealerCount = 20;
+        g.winLose();
+        assertEquals(1,g.winner);
+
+        g.playerCount = 19;
+        g.winLose();
+        assertEquals(2,g.winner);
     }
 }
 

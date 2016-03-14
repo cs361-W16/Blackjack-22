@@ -26,9 +26,7 @@ public class Game {
     public int sec_hand_lose;
 
 
-
-    public Game()
-    {
+    public Game() {
         this.player = new Player();
         this.dealer = new Dealer();
         this.secHand = new secHand();
@@ -39,14 +37,12 @@ public class Game {
         sec_hand = 0;
     }
 
-    public void buildDeck()
-    {
-        for(int i = 1; i < 14; i++)
-        {
-            deck.add(new Card(i,Suit.Clubs));
-            deck.add(new Card(i,Suit.Hearts));
-            deck.add(new Card(i,Suit.Diamonds));
-            deck.add(new Card(i,Suit.Spades));
+    public void buildDeck() {
+        for (int i = 1; i < 14; i++) {
+            deck.add(new Card(i, Suit.Clubs));
+            deck.add(new Card(i, Suit.Hearts));
+            deck.add(new Card(i, Suit.Diamonds));
+            deck.add(new Card(i, Suit.Spades));
 
         }
     }
@@ -56,8 +52,7 @@ public class Game {
         Collections.shuffle(deck, new Random(seed));
     }
 
-    public void dealInitial()
-    {
+    public void dealInitial() {
         Card card1 = player.deal(deck);
         cols.get(0).add(card1);
         playerCount = player.getCount();
@@ -71,32 +66,28 @@ public class Game {
         dealerCount = dealer.getCount();
     }
 
-    public void hitOne()
-    {
-        if (second_handCount < 21 && sec_hand == 1  && sec_hand_lose == 1){                   // if second hand is using
+    public void hitOne() {
+        if (second_handCount < 21 && sec_hand == 1 && sec_hand_lose == 1) {                   // if second hand is using
             Card card1 = secHand.deal(deck);
             cols.get(2).add(card1);
             second_handCount = secHand.getCount();
-        }
-        else{
+        } else {
             sec_hand_lose = 0;                                    // loose this hand
         }
-        if (playerCount < 21)
-        {
+        if (playerCount < 21) {
             Card card1 = player.deal(deck);
             cols.get(0).add(card1);
             playerCount = player.getCount();
-        }
-        else
-        {
+        } else {
             //To do: Loose the Game
         }
 
     }
-    public void split(){
+
+    public void split() {
         if (cols.get(2).size() == 0) {                                                    // if second hand is empty
             if (this.cols.get(0).size() == 2) {                                 // if the first hand has and only has 2 cards
-                if (this.cols.get(0).get(0).getValue() == this.cols.get(0).get(1).getValue()){   // if the 2 cards in the first card have same value
+                if (this.cols.get(0).get(0).getValue() == this.cols.get(0).get(1).getValue()) {   // if the 2 cards in the first card have same value
                     Card card = cols.get(0).get(1);                         //move 1 of them to second hand
                     cols.get(2).add(card);
                     secHand.count = secHand.count + secHand.trueValue(card.getValue());
@@ -108,57 +99,74 @@ public class Game {
             }
         }
     }
-    public void dealerHit()
-    {
+
+    public void dealerHit() {
         Card card3 = dealer.deal(deck);
         cols.get(1).add(card3);
         dealerCount = dealer.getCount();
     }
 
-    public void dealer17()
-    {
-        while (dealerCount < 17)
-        {
+    public void dealer17() {
+        while (dealerCount < 17) {
             Card card3 = dealer.deal(deck);
             cols.get(1).add(card3);
             dealerCount = dealer.getCount();
         }
     }
 
-    public int getDealerCount()
-    {
+    public int getDealerCount() {
         return dealerCount;
     }
-    public int getPlayerCount()
-    {
+
+    public int getPlayerCount() {
         return playerCount;
     }
-    public int getsecond_handCount()
-    {
+
+    public int getsecond_handCount() {
         return second_handCount;
     }
 
-    public void winLose(){
-        if (playerCount == 21){
-            winner = 1;
-            return;
+    public void winLose() {
+
+        if (stayed == 1) {
+            if ((dealerCount > 21)) {
+                winner = 1;
+                return;
+            }
+            if (playerCount == dealerCount) {
+                winner = 1;
+                return;
+            }
+            if ((playerCount < dealerCount)) {
+                winner = 2;
+                return;
+            } else {
+                winner = 2;
+                return;
+            }
+        } else {
+            if ((playerCount > 21)) {
+                winner = 2;
+                return;
+            }
+            if ((dealerCount > 21)) {
+                winner = 1;
+                return;
+            }
+            if (playerCount == dealerCount) {
+                winner = 1;
+                return;
+            } else if (playerCount < dealerCount) {
+                winner = 2;
+                return;
+            }
+
+
         }
-        if((playerCount > 21)){
-            winner = 2;
-            return;
-        }
-        if((dealerCount > 21)){
-            winner = 1;
-            return;
-        }
-        if((playerCount > dealerCount) && (playerCount < 21) && (dealerCount < 21)){
-            winner = 1;
-            return;
-        }
+
     }
-
-
-
-
-
 }
+
+
+
+
