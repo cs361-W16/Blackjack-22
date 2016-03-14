@@ -66,6 +66,19 @@ function display(game) {
             div.remove();
         }
     }
+
+    if(game.winner == 1){
+        alert("player win");
+        }
+        else if(game.winner ==2){
+        alert("dealer win");
+        document.getElementById("stay").disabled = true
+        document.getElementById("hitButton").disabled = true
+        }
+        else{
+        return;
+        }
+
 }
 $.getJSON("http://localhost:8080/game", function( data ) {
 display(data);
@@ -132,9 +145,9 @@ document.getElementById("hitButton").disabled = false
 });
 
 //main menu button
-    document.getElementById("mainMenu").onclick = function () {
-    location.href = "/";
-    }
+//    document.getElementById("mainMenu").onclick = function () {
+ //   location.href = "/";
+ //   }
 
 </script>
 </body>
