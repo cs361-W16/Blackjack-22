@@ -89,72 +89,6 @@ public class TestGame
         assertEquals(g.cols.get(0).get(0),g.cols.get(2).get(0));
     }
 
-
-    @Test
-    public void testWin(){
-    Game g = new Game();
-        g.stayed = 1;
-        g.dealerCount = 22;
-        g.winLose();
-        assertEquals(1,g.winner);
-
-        g.dealerCount = 20;
-        g.playerCount = 20;
-        System.out.println(g.dealerCount);
-        System.out.println(g.playerCount);
-        g.winLose();
-        assertEquals(1,g.winner);
-
-        g.dealerCount = 20;
-        g.playerCount = 20;
-        g.second_handCount = 19;
-        System.out.println(g.dealerCount);
-        System.out.println(g.playerCount);
-        g.winLose();
-        assertEquals(1,g.winner);
-
-        g.dealerCount = 20;
-        g.playerCount = 19;
-        g.second_handCount = 20;
-        System.out.println(g.dealerCount);
-        System.out.println(g.playerCount);
-        g.winLose();
-        assertEquals(1,g.winner);
-
-        g.playerCount = 19;
-        g.second_handCount =19;
-        g.winLose();
-        assertEquals(2,g.winner);
-
-        g.dealerCount = 18;
-        g.winLose();
-        assertEquals(2,g.winner);
-        g.stayed = 0;
-
-        g.playerCount = 22;
-        g.second_handCount = 22;
-        g.winLose();
-        assertEquals(2,g.winner);
-        g.playerCount = 0;
-
-        g.dealerCount = 22;
-        g.winLose();
-        assertEquals(1,g.winner);
-
-        g.winLose();
-        assertEquals(1,g.winner);
-
-        g.playerCount = 20;
-        g.second_handCount = 20;
-        g.dealerCount = 20;
-        g.winLose();
-        assertEquals(1,g.winner);
-
-        g.playerCount = 19;
-        g.second_handCount = 19;
-        g.winLose();
-        assertEquals(2,g.winner);
-    }
     @Test
     public void countTest(){
         Game g = new Game();
@@ -173,5 +107,71 @@ public class TestGame
         System.out.println(g.player.count);
         assertEquals(12,g.secHand.getCount());
     }
+    @Test
+    public void staytest21(){
+        Game g = new Game();
+        g.stayed = 1;
+        g.playerCount =22;
+        g.winLose();
+        assertEquals(2,g.winner);
+
+        g.dealerCount = 22;
+        g.winLose();
+        assertEquals(1,g.winner);
+    }
+
+    @Test
+    public void tieTest(){
+        Game g = new Game();
+        g.stayed = 1;
+        g.playerCount = 10;
+        g.dealerCount = 10;
+        g.winLose();
+        assertEquals(3,g.winner);
+
+        g.stayed = 0;
+        g.winLose();
+        assertEquals(3,g.winner);
+    }
+
+    @Test
+    public void lessthanTest(){
+        Game g = new Game();
+        g.stayed = 0;
+        g.playerCount = 11;
+        g.dealerCount = 12;
+        g.winLose();
+        assertEquals(2,g.winner);
+
+        g.stayed = 1;
+        g.winLose();
+        assertEquals(2,g.winner);
+    }
+
+    @Test
+    public void lessEqual(){
+        Game g = new Game();
+        g.stayed = 1;
+        g.playerCount = 20;
+        g.dealerCount = 19;
+        g.winLose();
+        assertEquals(1,g.winner);
+    }
+    @Test
+    public void elseBlock(){
+        Game g = new Game();
+        g.stayed = 0;
+        g.playerCount = 22;
+        g.second_handCount = 22;
+        g.winLose();
+        assertEquals(2,g.winner);
+
+        //dealer > 21
+        g.playerCount = 20;
+        g.dealerCount = 22;
+        g.winLose();
+        assertEquals(1,g.winner);
+    }
+
 }
 
