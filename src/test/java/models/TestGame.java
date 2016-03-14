@@ -86,19 +86,9 @@ public class TestGame
         assertEquals(g.cols.get(0).get(0),g.cols.get(2).get(0));
     }
 
-    @Test
-    public void testWin() {
-        Game g = new Game();
-        g.playerCount = 21;
-        g.winLose();
-        assertEquals(1, g.winner);
 
-        g.playerCount = 22;
-        g.winLose();
-        assertEquals(2, g.winner);
-    }
     @Test
-    public void testWin2(){
+    public void testWin(){
     Game g = new Game();
         g.stayed = 1;
         g.dealerCount = 22;
@@ -141,6 +131,24 @@ public class TestGame
         g.playerCount = 19;
         g.winLose();
         assertEquals(2,g.winner);
+    }
+    @Test
+    public void countTest(){
+        Game g = new Game();
+        g.player.count = 22;
+        g.player.numAces = 1;
+
+        System.out.println(g.player.count);
+        assertEquals(12,g.player.getCount());
+    }
+    @Test
+    public void countTest2(){
+        Game g = new Game();
+        g.secHand.count = 22;
+        g.secHand.numAces = 1;
+
+        System.out.println(g.player.count);
+        assertEquals(12,g.secHand.getCount());
     }
 }
 
